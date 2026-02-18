@@ -3,56 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign in — Company</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root{--bg:#f3f6fb;--card:#ffffff;--accent:#2563eb;--muted:#6b7280}
+        :root{
+            --bg-1:#f5f8ff;
+            --bg-2:#eef6ff;
+            --card:#ffffff;
+            --accent:#0f62fe;
+            --accent-600:#0b4bd6;
+            --muted:#6b7280;
+            --success:#10b981;
+        }
         *{box-sizing:border-box}
         html,body{height:100%}
-        body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg),#eef4ff);display:flex;align-items:center;justify-content:center;padding:24px}
-        .card{width:100%;max-width:420px;background:var(--card);border-radius:12px;box-shadow:0 6px 24px rgba(16,24,40,0.08);padding:28px}
-        h1{margin:0 0 8px;font-size:20px}
-        p.lead{margin:0 0 20px;color:var(--muted);font-size:14px}
-        label{display:block;font-size:13px;margin-bottom:6px;color:#111827}
-        input[type="email"],input[type="password"]{width:100%;padding:10px 12px;border:1px solid #e6eef8;border-radius:8px;font-size:14px}
-        .row{display:flex;gap:12px;align-items:center}
-        .actions{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
-        .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:0;font-weight:600;cursor:pointer}
-        .btn:disabled{opacity:0.6;cursor:not-allowed}
+        body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));display:flex;align-items:center;justify-content:center;padding:32px}
+
+        .container{width:100%;max-width:980px;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+
+        .welcome{
+            padding:36px;border-radius:16px;background:linear-gradient(135deg,rgba(15,98,254,0.06),rgba(15,98,254,0.02));box-shadow:0 8px 40px rgba(11,75,214,0.06);
+        }
+        .brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+        .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-600));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+        h2{margin:0 0 8px;font-size:28px}
+        p.lead{margin:0;color:var(--muted);font-size:15px}
+
+        .card{background:var(--card);padding:28px;border-radius:12px;box-shadow:0 10px 30px rgba(16,24,40,0.06)}
+        .card h1{margin:0 0 6px;font-size:18px}
+        .card p.sub{margin:0 0 18px;color:var(--muted);font-size:14px}
+
+        label{display:block;font-size:13px;margin-bottom:8px;color:#111827}
+        .field{position:relative;margin-bottom:14px}
+        input[type="email"],input[type="password"]{width:100%;padding:12px 14px;border:1px solid #e6eef8;border-radius:10px;font-size:14px;transition:box-shadow .12s,border-color .12s}
+        input:focus{outline:none;border-color:var(--accent);box-shadow:0 6px 18px rgba(15,98,254,0.08)}
+
+        .input-inline{display:flex;gap:8px}
+        .remember{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
+
+        .actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+        .btn{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;border:0;font-weight:600;cursor:pointer;box-shadow:0 6px 18px rgba(15,98,254,0.12);transition:transform .06s}
+        .btn:hover{transform:translateY(-1px)}
+        .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(15,98,254,0.08)}
+
         .muted{color:var(--muted);font-size:13px}
         .error{color:#b91c1c;font-size:13px;margin-top:8px}
+
         .footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
-        @media (max-width:420px){.card{padding:20px}}
+
+        .password-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px;border-radius:6px}
+
+        @media (max-width:880px){.container{grid-template-columns:1fr;max-width:520px}.welcome{order:2}}
     </style>
 </head>
 <body>
-    <main class="card" role="main" aria-labelledby="loginTitle">
-        <h1 id="loginTitle">Sign in to your account</h1>
-        <p class="lead">Enter your credentials to access your dashboard.</p>
-
-        <form id="loginForm" novalidate>
-            <div style="margin-bottom:12px">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="username">
+    <main class="container" role="main">
+        <section class="welcome" aria-hidden="false">
+            <div class="brand">
+                <div class="logo">C</div>
+                <div>
+                    <div style="font-weight:700">Company</div>
+                    <div style="font-size:13px;color:var(--muted)">Secure access portal</div>
+                </div>
             </div>
+            <h2>Welcome back</h2>
+            <p class="lead">Sign in to continue to your dashboard. We keep your account secure with industry-leading controls.</p>
+        </section>
 
-            <div style="margin-bottom:6px">
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" placeholder="••••••••" required autocomplete="current-password">
-            </div>
+        <aside class="card" aria-labelledby="loginTitle">
+            <h1 id="loginTitle">Sign in</h1>
+            <p class="sub">Use your company email and password to sign in.</p>
 
-            <div class="row" style="margin-top:8px">
-                <label style="display:flex;align-items:center;gap:8px;font-size:13px"><input id="remember" name="remember" type="checkbox"> Remember me</label>
-            </div>
+            <form id="loginForm" novalidate>
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="you@company.com" required autocomplete="username">
+                </div>
 
-            <div class="actions">
-                <div class="muted">Forgot password?</div>
-                <button class="btn" type="submit">Sign in</button>
-            </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div style="position:relative">
+                        <input id="password" name="password" type="password" placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle" id="togglePwd" aria-label="Show password">👁️</button>
+                    </div>
+                </div>
 
-            <div id="error" class="error" aria-live="polite" style="display:none"></div>
-        </form>
+                <div class="input-inline" style="justify-content:space-between;align-items:center">
+                    <label class="remember"><input id="remember" name="remember" type="checkbox"> Remember me</label>
+                    <a href="#" class="muted" style="text-decoration:none">Forgot password?</a>
+                </div>
 
-        <div class="footer">Don't have an account? Contact your administrator.</div>
+                <div class="actions">
+                    <button class="btn" type="submit">Sign in</button>
+                    <button class="btn secondary" type="button" onclick="alert('Request access flow')">Request access</button>
+                </div>
+
+                <div id="error" class="error" aria-live="polite" style="display:none"></div>
+            </form>
+
+            <div class="footer">Don't have an account? Contact your administrator.</div>
+        </aside>
     </main>
 
     <script>
@@ -60,6 +112,7 @@
             const form = document.getElementById('loginForm');
             const email = document.getElementById('email');
             const password = document.getElementById('password');
+            const toggle = document.getElementById('togglePwd');
             const errorEl = document.getElementById('error');
 
             function showError(msg){
@@ -70,6 +123,12 @@
             function validEmail(v){
                 return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
             }
+
+            toggle.addEventListener('click', function(){
+                const t = password.type === 'password' ? 'text' : 'password';
+                password.type = t;
+                toggle.textContent = t === 'text' ? '🙈' : '👁️';
+            });
 
             form.addEventListener('submit', function(e){
                 e.preventDefault();
@@ -82,11 +141,12 @@
                 btn.disabled = true;
                 btn.textContent = 'Signing in...';
 
+                // Demo submit — replace with real API call
                 setTimeout(()=>{
                     btn.disabled = false;
                     btn.textContent = 'Sign in';
-                    alert('Login submitted (demo)');
-                    form.reset();
+                    showError('');
+                    alert('Signed in (demo)');
                 }, 800);
             });
         })();
