@@ -19,7 +19,7 @@
         }
         *{box-sizing:border-box}
         html,body{height:100%}
-        body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));display:flex;align-items:center;justify-content:center;padding:32px}
+        body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));display:flex;align-items:center;justify-content:center;padding:32px;min-height:100vh;position:relative;overflow:hidden}
 
         .container{width:100%;max-width:980px;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
 
@@ -56,9 +56,19 @@
         .password-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px;border-radius:6px}
 
         @media (max-width:880px){.container{grid-template-columns:1fr;max-width:520px}.welcome{order:2}}
+
+        /* Animated background blobs */
+        .bg-blob{position:fixed;border-radius:50%;filter:blur(64px);opacity:0.85;pointer-events:none;z-index:0;transform:translate3d(0,0,0)}
+        .blob-1{width:520px;height:520px;left:-140px;top:-120px;background:radial-gradient(circle at 30% 30%, rgba(15,98,254,0.45), rgba(15,98,254,0.12));animation:floatA 10s ease-in-out infinite}
+        .blob-2{width:420px;height:420px;right:-120px;bottom:-100px;background:radial-gradient(circle at 70% 70%, rgba(16,185,129,0.36), rgba(16,185,129,0.06));animation:floatB 12s ease-in-out infinite}
+
+        @keyframes floatA{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(18px) rotate(8deg)}100%{transform:translateY(0) rotate(0deg)}}
+        @keyframes floatB{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-16px) rotate(-6deg)}100%{transform:translateY(0) rotate(0deg)}}
     </style>
 </head>
 <body>
+    <div class="bg-blob blob-1" aria-hidden="true"></div>
+    <div class="bg-blob blob-2" aria-hidden="true"></div>
     <main class="container" role="main">
         <section class="welcome" aria-hidden="false">
             <div class="brand">
@@ -103,7 +113,7 @@
                 <div id="error" class="error" aria-live="polite" style="display:none"></div>
             </form>
 
-            <div class="footer">Don't have an account? Contact your administrator.</div>
+            <div class="footer">Don't have an account? <a href="signup.html" style="color:var(--accent);text-decoration:none">Create an account</a>.</div>
         </aside>
     </main>
 

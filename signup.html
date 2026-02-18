@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create account — Company</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg-1:#fff7ed;--bg-2:#fff1e6;--card:#ffffff;--accent:#ef4444;--muted:#6b7280}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));display:flex;align-items:center;justify-content:center;padding:32px;min-height:100vh;position:relative;overflow:hidden}
+
+    .bg-blob{position:fixed;border-radius:50%;filter:blur(64px);opacity:0.85;pointer-events:none;z-index:0}
+    .blob-a{width:520px;height:520px;left:-160px;bottom:-120px;background:radial-gradient(circle at 30% 30%, rgba(239,68,68,0.36), rgba(239,68,68,0.06));animation:floatC 11s ease-in-out infinite}
+    .blob-b{width:420px;height:420px;right:-120px;top:-100px;background:radial-gradient(circle at 70% 70%, rgba(124,58,237,0.32), rgba(124,58,237,0.06));animation:floatD 13s ease-in-out infinite}
+
+    @keyframes floatC{0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)}}
+    @keyframes floatD{0%{transform:translateY(0)}50%{transform:translateY(16px)}100%{transform:translateY(0)}}
+
+    .card{background:var(--card);padding:28px;border-radius:12px;box-shadow:0 10px 30px rgba(16,24,40,0.06);width:100%;max-width:520px;z-index:1}
+    h1{margin:0 0 6px;font-size:20px}
+    p.sub{margin:0 0 18px;color:var(--muted);font-size:14px}
+    label{display:block;font-size:13px;margin-bottom:8px;color:#111827}
+    .field{margin-bottom:12px}
+    input{width:100%;padding:12px 14px;border:1px solid #e6eef8;border-radius:10px;font-size:14px}
+    input:focus{outline:none;border-color:var(--accent);box-shadow:0 6px 18px rgba(239,68,68,0.08)}
+    .actions{display:flex;gap:10px;align-items:center;margin-top:10px}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer}
+    .muted{color:var(--muted);font-size:13px}
+    .error{color:#b91c1c;font-size:13px;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="bg-blob blob-a" aria-hidden="true"></div>
+  <div class="bg-blob blob-b" aria-hidden="true"></div>
+
+  <main>
+    <section style="max-width:980px;margin:0 auto;padding:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#ef4444,#fb923c);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700">C</div>
+          <div>
+            <div style="font-weight:700">Company</div>
+            <div style="font-size:13px;color:var(--muted)">Create your account</div>
+          </div>
+        </div>
+        <div><a href="index.html" style="color:var(--muted);text-decoration:none">Sign in</a></div>
+      </div>
+
+      <div class="card" role="region" aria-labelledby="signupTitle">
+        <h1 id="signupTitle">Create account</h1>
+        <p class="sub">Sign up with your company email to get started.</p>
+
+        <form id="signupForm" novalidate>
+          <div class="field">
+            <label for="fullname">Full name</label>
+            <input id="fullname" name="fullname" type="text" placeholder="Jane Doe" required>
+          </div>
+
+          <div class="field">
+            <label for="email">Work email</label>
+            <input id="email" name="email" type="email" placeholder="you@company.com" required>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Create a password" required>
+          </div>
+
+          <div class="field">
+            <label for="confirm">Confirm password</label>
+            <input id="confirm" name="confirm" type="password" placeholder="Repeat password" required>
+          </div>
+
+          <div class="actions">
+            <button class="btn" type="submit">Create account</button>
+            <div class="muted">Already have an account? <a href="index.html" style="color:var(--accent);text-decoration:none">Sign in</a></div>
+          </div>
+
+          <div id="error" class="error" aria-live="polite" style="display:none"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const form = document.getElementById('signupForm');
+      const name = document.getElementById('fullname');
+      const email = document.getElementById('email');
+      const pwd = document.getElementById('password');
+      const confirm = document.getElementById('confirm');
+      const errorEl = document.getElementById('error');
+
+      function showError(msg){ errorEl.textContent = msg; errorEl.style.display = msg ? 'block' : 'none' }
+      function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault(); showError('');
+        if(!name.value.trim()){ showError('Full name is required'); name.focus(); return }
+        if(!email.value.trim()){ showError('Email is required'); email.focus(); return }
+        if(!validEmail(email.value.trim())){ showError('Please enter a valid email'); email.focus(); return }
+        if(!pwd.value){ showError('Password is required'); pwd.focus(); return }
+        if(pwd.value !== confirm.value){ showError('Passwords do not match'); confirm.focus(); return }
+
+        const btn = form.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Creating...';
+        setTimeout(()=>{ btn.disabled = false; btn.textContent = 'Create account'; alert('Account created (demo)'); form.reset() }, 900);
+      });
+    })();
+  </script>
+</body>
+</html>
