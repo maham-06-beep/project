@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        :root{--bg:#f3f6fb;--card:#ffffff;--accent:#2563eb;--muted:#6b7280}
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--bg),#eef4ff);display:flex;align-items:center;justify-content:center;padding:24px}
+        .card{width:100%;max-width:420px;background:var(--card);border-radius:12px;box-shadow:0 6px 24px rgba(16,24,40,0.08);padding:28px}
+        h1{margin:0 0 8px;font-size:20px}
+        p.lead{margin:0 0 20px;color:var(--muted);font-size:14px}
+        label{display:block;font-size:13px;margin-bottom:6px;color:#111827}
+        input[type="email"],input[type="password"]{width:100%;padding:10px 12px;border:1px solid #e6eef8;border-radius:8px;font-size:14px}
+        .row{display:flex;gap:12px;align-items:center}
+        .actions{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+        .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:0;font-weight:600;cursor:pointer}
+        .btn:disabled{opacity:0.6;cursor:not-allowed}
+        .muted{color:var(--muted);font-size:13px}
+        .error{color:#b91c1c;font-size:13px;margin-top:8px}
+        .footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+        @media (max-width:420px){.card{padding:20px}}
+    </style>
+</head>
+<body>
+    <main class="card" role="main" aria-labelledby="loginTitle">
+        <h1 id="loginTitle">Sign in to your account</h1>
+        <p class="lead">Enter your credentials to access your dashboard.</p>
+
+        <form id="loginForm" novalidate>
+            <div style="margin-bottom:12px">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="username">
+            </div>
+
+            <div style="margin-bottom:6px">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+
+            <div class="row" style="margin-top:8px">
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px"><input id="remember" name="remember" type="checkbox"> Remember me</label>
+            </div>
+
+            <div class="actions">
+                <div class="muted">Forgot password?</div>
+                <button class="btn" type="submit">Sign in</button>
+            </div>
+
+            <div id="error" class="error" aria-live="polite" style="display:none"></div>
+        </form>
+
+        <div class="footer">Don't have an account? Contact your administrator.</div>
+    </main>
+
+    <script>
+        (function(){
+            const form = document.getElementById('loginForm');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const errorEl = document.getElementById('error');
+
+            function showError(msg){
+                errorEl.textContent = msg;
+                errorEl.style.display = msg ? 'block' : 'none';
+            }
+
+            function validEmail(v){
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+            }
+
+            form.addEventListener('submit', function(e){
+                e.preventDefault();
+                showError('');
+                if(!email.value.trim()){ showError('Email is required'); email.focus(); return }
+                if(!validEmail(email.value.trim())){ showError('Please enter a valid email'); email.focus(); return }
+                if(!password.value){ showError('Password is required'); password.focus(); return }
+
+                const btn = form.querySelector('button[type=submit]');
+                btn.disabled = true;
+                btn.textContent = 'Signing in...';
+
+                setTimeout(()=>{
+                    btn.disabled = false;
+                    btn.textContent = 'Sign in';
+                    alert('Login submitted (demo)');
+                    form.reset();
+                }, 800);
+            });
+        })();
+    </script>
+</body>
+</html>
